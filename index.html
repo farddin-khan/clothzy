@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Card - Chlothzy</title>
+  <style>
+      * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      background: #f8f8f8;
+    }
+
+    .product-card {
+      display: grid;
+      gap: 1rem;
+      padding: 1rem;
+      max-width: 300px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    h2 {
+      margin: 0.5rem 0 0.2rem;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .swatches {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .swatch.active {
+      border-color: black;
+    }
+
+    .red { background: red; }
+    .blue { background: blue; }
+    .green { background: green; }
+
+  </style>
+</head>
+<body>
+  <section class="product-card">
+    <figure>
+      <img id="product-image" src="https://t4.ftcdn.net/jpg/14/98/99/39/360_F_1498993982_SNDFcbIvIBm5fM5bMzdp0nN8fRP9Mr6v.jpg" alt="Red Shirt" />
+      <figcaption>
+        <h2 id="product-name">Classic T-Shirt</h2>
+        <p id="product-price">₹ 999</p>
+      </figcaption>
+    </figure>
+
+    <div class="swatches" role="radiogroup">
+      <button role="radio" aria-checked="true" data-index="0" class="swatch red active" aria-label="Red"></button>
+      <button role="radio" aria-checked="false" data-index="1" class="swatch blue" aria-label="Blue"></button>
+      <button role="radio" aria-checked="false" data-index="2" class="swatch green" aria-label="Green"></button>
+    </div>
+  </section>
+
+  <script>
+    const productData = [
+      {
+        color: "Red",
+        image: "https://t4.ftcdn.net/jpg/14/98/99/39/360_F_1498993982_SNDFcbIvIBm5fM5bMzdp0nN8fRP9Mr6v.jpg",
+        price: "₹ 999"
+      },
+      {
+        color: "Blue",
+        image: "https://png.pngtree.com/png-vector/20240124/ourmid/pngtree-isolated-blue-t-shirt-png-image_11479979.png",
+        price: "₹ 1049"
+      },
+      {
+        color: "Green",
+        image: "https://png.pngtree.com/png-vector/20240201/ourmid/pngtree-green-t-shirt-mockup-isolated-png-image_11579562.png",
+        price: "₹ 1099"
+      }
+    ];
+
+    const swatches = document.querySelectorAll('.swatch');
+    const productImage = document.getElementById('product-image');
+    const productPrice = document.getElementById('product-price');
+
+    swatches.forEach((swatch) => {
+      swatch.addEventListener('click', () => {
+        const index = swatch.getAttribute('data-index');
+        const selected = productData[index];
+
+        // Update image and price
+        productImage.src = selected.image;
+        productImage.alt = `${selected.color} Shirt`;
+        productPrice.textContent = selected.price;
+
+        // Update active class and aria-checked
+        swatches.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-checked', 'false');
+        });
+
+        swatch.classList.add('active');
+        swatch.setAttribute('aria-checked', 'true');
+      });
+    });
+  </script>
+</body>
+</html>
